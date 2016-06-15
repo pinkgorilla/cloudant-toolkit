@@ -12,8 +12,8 @@ Query.prototype.take = function (limit) {
     return this;
 }
 
-Query.prototype.skip = function (skip) {
-    this.skip = skip;
+Query.prototype.skip = function (offset) {
+    this.offset = offset;
     return this;
 }
 

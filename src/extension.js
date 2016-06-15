@@ -228,9 +228,9 @@ module.exports = function (credential, callback) {
         });
     }
 
-    function dbInsert(doc) {
+    function insert(doc) {
         return new Promise((resolve, reject) => {
-            this.insert(doc, (err, data) => {
+            this._insert(doc, (err, data) => {
                 if (err)
                     reject(err);
                 else
@@ -251,7 +251,9 @@ module.exports = function (credential, callback) {
         db.dbIndexes = dbIndexes;
         db.dbLoadIndexes = dbLoadIndexes;
         db.dbEnsureIndex = dbEnsureIndex;
-        db.dbInsert = dbInsert;
+        if (db.insert)
+            db._insert = db.insert;
+        db.insert = insert;
 
         db.single = single;
         db.singleOrDefault = singleOrDefault;

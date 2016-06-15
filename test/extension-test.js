@@ -24,7 +24,7 @@ before('#00. Should connect to cloudant server', function (done) {
 })
 
 it('#01. Should be able to create data', function (done) {
-    collection.dbInsert(helper.newData())
+    collection.insert(helper.newData())
         .then(doc => {
             person = doc;
             done();

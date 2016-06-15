@@ -6,7 +6,7 @@ exports.test = function (name, path) {
 
 function getSkillSet() {
     var skills = ["node.js", ".net", "javascript", "NoSQL", "SQL", "html", "css"];
-    var skillCount = parseInt((2 + Math.random() * skills.length - 3).toString());
+    var skillCount = parseInt((2 + Math.random() * (skills.length - 3)).toString());
     var skillSet = [];
     for (var i = 0; i < skillCount; i++) {
         var skillIndex = parseInt((Math.random() * (skills.length - 1)).toString());
