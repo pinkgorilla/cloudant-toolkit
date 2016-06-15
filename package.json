@@ -1,0 +1,24 @@
+{
+  "name": "cloudant-toolkit",
+  "version": "1.0.0",
+  "description": "toolkit for cloudant",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pinkgorilla/cloudant-toolkit.git"
+  },
+  "author": "Tris Setiawan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pinkgorilla/cloudant-toolkit/issues"
+  },
+  "homepage": "https://github.com/pinkgorilla/cloudant-toolkit#readme",
+  "devDependencies": {
+    "cloudant": "^1.4.2",
+    "mocha": "^2.5.3",
+    "should": "^9.0.2"
+  }
+}
