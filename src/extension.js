@@ -251,6 +251,7 @@ module.exports = function (credential, callback) {
         db.dbIndexes = dbIndexes;
         db.dbLoadIndexes = dbLoadIndexes;
         db.dbEnsureIndex = dbEnsureIndex;
+        
         if (db.insert)
             db._insert = db.insert;
         db.insert = insert;
