@@ -260,3 +260,21 @@ it('#19. Should be able to get data using db.where(criteria).execute() with logi
             done(e);
         })
 })
+
+it('#20. Should only return 2 fields (_id & name)', function (done) {
+    collection
+        .select(["_id", "name"])
+        .first()
+        .then(doc => {
+            doc.should.instanceOf(Object);
+            var count = 0;
+            for (var field in doc)
+                count++;
+            if (count != 2)
+                throw new Error('should have only 2 properties');
+            done();
+        })
+        .catch(e => {
+            done(e);
+        })
+})
