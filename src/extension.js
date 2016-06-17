@@ -230,19 +230,32 @@ module.exports = function (credential, callback) {
 
     function insert(doc) {
         return new Promise((resolve, reject) => {
-            this._insert(doc, (err, data) => {
+            this._insert(doc, (err, result) => {
                 if (err)
                     reject(err);
                 else
-                    this.single({ _id: data.id })
-                        .then(doc => {
-                            resolve(doc);
-                        })
-                        .catch(e => {
-                            reject(e);
-                        });
+                    if (result.ok)
+                        resolve({ _id: result.id, _rev: result.rev });
+                    else
+                        reject('insert result is not ok');
             })
         })
+    }
+
+    function update(doc) {
+        return new Promise((resolve, reject) => {
+            if (!doc._id || !doc._rev)
+                reject('unable to update document without _id and _rev fields.')
+            else {
+                this.insert(doc)
+                    .then(doc => {
+                        resolve(doc);
+                    })
+                    .catch(e => {
+                        reject(e);
+                    });
+            }
+        });
     }
 
     function extend(db) {
@@ -251,10 +264,14 @@ module.exports = function (credential, callback) {
         db.dbIndexes = dbIndexes;
         db.dbLoadIndexes = dbLoadIndexes;
         db.dbEnsureIndex = dbEnsureIndex;
-        
+
         if (db.insert)
             db._insert = db.insert;
         db.insert = insert;
+
+        if (db.update)
+            db._update = db.update;
+        db.update = update;
 
         db.single = single;
         db.singleOrDefault = singleOrDefault;
@@ -286,8 +303,10 @@ module.exports = function (credential, callback) {
             this.dbEnsureIndex(query.selector)
                 .then(index => {
                     this.find(query, (error, result) => {
-                        if (error)
+                        if (error) {
+                            this._query = null;
                             reject(error);
+                        }
                         else {
                             this._query = null;
                             resolve(result.docs);

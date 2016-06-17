@@ -2,8 +2,9 @@ var helper = require('./helper');
 var should = require('should');
 var Cloudant = require('../src/extension');
 
-var collection;
+var personId;
 var person;
+var collection;
 
 before('#00. Should connect to cloudant server', function (done) {
     var uri = process.env.DB_CONNECTIONSTRING;
@@ -26,7 +27,7 @@ before('#00. Should connect to cloudant server', function (done) {
 it('#01. Should be able to create data', function (done) {
     collection.insert(helper.newData())
         .then(doc => {
-            person = doc;
+            personId = doc._id;
             done();
         })
         .catch(e => {
@@ -36,9 +37,10 @@ it('#01. Should be able to create data', function (done) {
 
 it('#02. Should be able to get data by using db.single(criteria)', function (done) {
     collection
-        .single({ _id: person._id })
+        .single({ _id: personId })
         .then(doc => {
             doc.should.instanceOf(Object);
+            person = doc;
             done();
         })
         .catch(e => {
@@ -278,3 +280,30 @@ it('#20. Should only return 2 fields (_id & name)', function (done) {
             done(e);
         })
 })
+
+it('#21. Should update successfuly', function (done) {
+    person.name = person.name + '[updated]';
+    collection.update(person)
+        .then(doc => {
+            doc._id.toString().should.equal(person._id.toString());
+            done();
+        })
+        .catch(e => {
+            done(e);
+        })
+});
+
+it('#22. Should be able to get updated data successfuly', function (done) {
+    collection
+        .single({ _id: personId })
+        .then(doc => {
+            doc.should.instanceOf(Object);
+            var idx = doc.name.indexOf('[updated]');
+            idx.should.not.equal(-1);
+            person = doc;
+            done();
+        })
+        .catch(e => {
+            done(e);
+        })
+});

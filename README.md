@@ -18,6 +18,7 @@ Cloudant(connectionString , function(err, cloudant){
 	db = cloudant.use('your-table')	
 });
 ```
+
 ---
 ## **Executable methods**
 executable methods are methods that will immediately executed against the `query`. See **Query methods** sections.
@@ -242,6 +243,45 @@ Db
 		.execute()
 ```	
 
+---
+## **Insert, Update, Delete**
+
+### insert (doc)
+return newly created document `_id`.
+
+**parameters**
+
+ - **doc** - document to be inserted. 
+ 
+**returns**
+Promise, resolving `{_id, _rev}` of inserted document.
+	
+```javascript 
+	db
+		.insert(doc)
+		.then(result=>{
+			//result is newly created document `_id` and `_rev`
+	})
+```	
+
+---
+### update (doc)
+return newly created document `_id`.
+
+**parameters**
+
+ - **doc** - document to be updated, must contains `_id` and `_rev` fields 
+ 
+**returns**
+Promise, resolving `{_id, _rev}` of updated document.
+	
+```javascript 
+	db
+		.update(doc)
+		.then(result=>{
+			//result is newly created document `_id` and `_rev`
+	})
+```	
 ---
 ## **Overridden methods**
 here is a list of overridden methods by this library. you can always use `cloudant` implementation by prefixing the method with underscore `_`
