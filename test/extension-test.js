@@ -307,3 +307,25 @@ it('#22. Should be able to get updated data successfuly', function (done) {
             done(e);
         })
 });
+
+
+it('#23. Should be able to delete data successfully', function (done) {
+    collection.delete(person)
+        .then(result => { 
+            done();
+        })
+        .catch(e => {
+            done(e);
+        })
+});
+
+it('#24. Should not be able to get deleted data', function (done) {
+    collection
+        .single({ _id: personId })
+        .then(doc => {
+            done('should have error');
+        })
+        .catch(e => {
+            done();
+        })
+});

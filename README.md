@@ -266,7 +266,7 @@ Promise, resolving `{_id, _rev}` of inserted document.
 
 ---
 ### update (doc)
-return newly created document `_id`.
+return updated document `{_id, _rev}`.
 
 **parameters**
 
@@ -279,9 +279,29 @@ Promise, resolving `{_id, _rev}` of updated document.
 	db
 		.update(doc)
 		.then(result=>{
-			//result is newly created document `_id` and `_rev`
+			//result is updated document `_id` and `_rev`
 	})
 ```	
+
+---
+### delete (doc)
+return deleted document `{_id, _rev}`.
+
+**parameters**
+
+ - **doc** - document to be deleted, must contains `_id` and `_rev` fields 
+ 
+**returns**
+Promise, resolving `{_id, _rev}` of deleted document.
+	
+```javascript 
+	db
+		.delete(doc)
+		.then(result=>{
+			//result is updated document `_id` and `_rev`
+	})
+```	
+
 ---
 ## **Overridden methods**
 here is a list of overridden methods by this library. you can always use `cloudant` implementation by prefixing the method with underscore `_`

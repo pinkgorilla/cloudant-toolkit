@@ -248,12 +248,31 @@ module.exports = function (credential, callback) {
                 reject('unable to update document without _id and _rev fields.')
             else {
                 this.insert(doc)
-                    .then(doc => {
-                        resolve(doc);
+                    .then(result => {
+                        resolve(result);
                     })
                     .catch(e => {
                         reject(e);
                     });
+            }
+        });
+    }
+
+    function _delete(doc) {
+        return new Promise((resolve, reject) => {
+            if (!doc._id || !doc._rev)
+                reject('unable to delete document without _id and _rev fields.')
+            else {
+                this.destroy(doc._id, doc._rev, (err, result) => {
+                    if (err)
+                        reject(err)
+                    else {
+                        if (result.ok)
+                            resolve({ _id: result.id, _rev: result.rev });
+                        else
+                            reject('delete result is not ok');
+                    }
+                });
             }
         });
     }
@@ -272,6 +291,10 @@ module.exports = function (credential, callback) {
         if (db.update)
             db._update = db.update;
         db.update = update;
+
+        if (db.delete)
+            db._delete = db.delete;
+        db.delete = _delete;
 
         db.single = single;
         db.singleOrDefault = singleOrDefault;
