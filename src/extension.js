@@ -356,8 +356,8 @@ module.exports = function (credential, callback) {
         this.query().page(page, size);
         return this;
     }
-    function orderBy(order) {
-        this.query().orderBy(order);
+    function orderBy(field, asc) {
+        this.query().orderBy(field, asc);
         return this;
     }
     function select(fields) {
