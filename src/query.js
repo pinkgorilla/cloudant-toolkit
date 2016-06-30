@@ -25,8 +25,9 @@ Query.prototype.page = function (page, size) {
     return this;
 }
 
-Query.prototype.orderBy = function(order){
-    this.sort = order;
+Query.prototype.orderBy = function(field, asc){
+    this.sort = [{}];
+    this.sort[0][field] = (asc || true) ? 'asc' : 'desc';;
     return this;
 }
 

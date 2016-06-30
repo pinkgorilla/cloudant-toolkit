@@ -1,6 +1,6 @@
 {
   "name": "cloudant-toolkit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "toolkit for cloudant",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,13 @@
   "devDependencies": {
     "cloudant": "^1.4.2",
     "mocha": "^2.5.3",
+    "should": "^9.0.2"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "cloudant": "^1.4.2",
     "should": "^9.0.2"
   }
 }
